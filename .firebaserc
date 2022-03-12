@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "inavink-angular-shopping": {
+      "hosting": {
+        "inavink-shopping-v1": [
+          "inavink-angular-shopping"
+        ]
+      }
+    }
+  }
+}
