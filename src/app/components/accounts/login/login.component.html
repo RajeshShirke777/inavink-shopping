@@ -1,0 +1,51 @@
+<div class="my-account sec-padding">
+  <div class="container">
+      <mat-card fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start"  class="p-0">
+          <div class="my-account-wrap p-0" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" >
+              <div class="login-wrapper" fxFlex="50" fxFlex.gt-md="100" fxFlex.md="100" >
+                <a [routerLink]="['/home']" routerLinkActive="router-link-active" >
+                  <img src="assets/images/Inavink icon.png" style="height: 50px;"></a>
+                  <div class="title">
+                    <h3>Login</h3>
+                  </div>
+                  <form fxLayout="row wrap" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+                      <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                          <mat-form-field class="w-100">
+                              <input matInput placeholder="email id" formControlName="username">
+                              <mat-error *ngIf="formGroup.controls['username'].invalid">{{getError('username')}}</mat-error>
+                            </mat-form-field>
+                      </div>
+                      <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                          <mat-form-field class="w-100">
+                              <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password"formControlName="password" required>
+                              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                      
+                                      <!-- <mat-password-strength #passwordComponent
+                                                          (onStrengthChanged)="onStrengthChanged($event)"
+                                                          [password]="password.value">
+                                    </mat-password-strength> -->
+                                    
+                                    
+                                    
+                              <mat-error *ngIf="formGroup.controls['password'].invalid">{{getError('password')}}</mat-error>
+                            </mat-form-field>
+                           
+                      </div>
+                      <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                          <button class="btn-project" mat-raised-button color="primary" type="submit" >Log in</button>
+                        </div>
+                        <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1" fxLayout.lt-md="column">
+                          <div fxFlex="100" fxFlex.gt-sm="50" style="text-align: left;"> 
+                            <a [routerLink]="['/accounts/forgotpassword']">Forgot Password?</a>
+                            
+                          </div>
+                          <div fxFlex="100" fxFlex.gt-sm="50" style="text-align: right;">
+                            <a [routerLink]="['/accounts/signup']">Create Account</a>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </mat-card>
+  </div>
+</div>
