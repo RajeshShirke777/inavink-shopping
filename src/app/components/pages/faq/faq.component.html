@@ -1,0 +1,87 @@
+<app-breadcrumb [title]="'FAQs'" [breadcrumb]="'FAQs'"></app-breadcrumb>
+<div class="faq sec-padding">
+  <div class="container">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start"  class="p-0">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="questions">
+            <div class="faq-wrap">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span>I don’t see a Shop near me</span>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>
+                        We at In-A-Vink registers all types of Retail businesses throughout India. However, if you are able to get any nearby shops, it means none of the Shops near you has been registered yet with us. However, we would soon try and Register as many as sellers near you.
+                      </p>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <span>Can we order from different sellers at a time?</span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>
+                          We have limited the order to one Particular Shop at a time. If you wish to order from different Shops, you may complete the order and place another order with different Seller.
+                        </p>
+                      </mat-expansion-panel>
+                      <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <span>How soon will I receive the order?</span>
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <p>
+                            The delivery of your order is done by the Seller itself, most of the Shops displayed in In-A-Vink (as per the locations) are within 3-4 Km radius from you. Also, the Shop Timings plays important role in delivery of your order. You many even choose to visit the shop and collect the order or contact the seller and ask to delivery at the earliest.
+                          </p>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                  <span>What all Payment options do I get?</span>
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <p>
+                              As the Seller themselves delivers the order. The payment is received by the Sellers directly without any Commission, thus, Payments options differ from Seller to Seller. However, at the time of placing the order as Home Delivery, you will receive options as CASH ON DELVIERY, SCAN ON DELIVERY, and SWIPE ON DELIVERY.
+                            </p>
+                          </mat-expansion-panel>
+                  </mat-accordion>
+            </div>
+        </div>
+        <!-- <div fxFlex="100" fxFlex.gt-sm="50" class="faq-form">
+            <div class="text-wrap">
+              <div class="title">
+                  <h3>Our Management</h3>
+              </div>
+                <p>Business analytics (BA) is the practice of iterative, methodical exploration of an
+                    organization's data with emphasis on statistical analysis.</p>
+                    <form fxLayout="row wrap">
+                        <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                            <mat-form-field class="w-100">
+                                <input matInput placeholder="Your Name (required)" #name="ngModel" ngModel name="name" required>
+                                <mat-error *ngIf="name.invalid">Please enter a valid message</mat-error>
+                              </mat-form-field>
+                        </div>
+                        <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                            <mat-form-field class="w-100">
+                                <input matInput placeholder="Your Email (required)" #email="ngModel" ngModel name="email" required>
+                                <mat-error *ngIf="email.invalid">Please enter a valid message</mat-error>
+                              </mat-form-field>
+                        </div>
+                        <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                            <mat-form-field class="w-100">
+                                <input matInput placeholder="Subject" #subject="ngModel" ngModel name="subject" required>
+                                <mat-error *ngIf="subject.invalid">Please enter a valid message</mat-error>
+                              </mat-form-field>
+                        </div>
+
+                        <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                            <button class="btn-project" mat-raised-button color="primary" type="submit">GET A QUOTE</button>
+                          </div>
+                        </form>
+            </div>
+        </div> -->
+    </div>
+
+  </div>
+</div>
