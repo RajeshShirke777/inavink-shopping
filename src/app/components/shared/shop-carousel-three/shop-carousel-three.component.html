@@ -1,0 +1,58 @@
+<div class="product-item-1 swiper-container" [swiper]="config">
+  <div class="swiper-wrapper h-100">
+      <div *ngFor="let merchant of merchant" class="swiper-slide">
+          <mat-card fxLayout="column">
+            <div fxLayout="column">
+              <ngx-skeleton-loader
+              *ngIf="!contentLoaded"
+                count="1"
+                [theme]="{ width: '180px', 'border-radius': '0', height: '180px' }"
+              ></ngx-skeleton-loader>
+              <ngx-skeleton-loader
+                    *ngIf="!contentLoaded"
+                      count="2"
+                      [theme]="{ 'border-radius': '0', height: '20px', width: '180px'  }"
+                    ></ngx-skeleton-loader>
+            </div>
+              
+              <div class="product-img" *ngIf="contentLoaded">
+                  <a class="product-link" [routerLink]="['/shops/details', merchant.unique_name]">
+                    <!-- <img [src]="product.pictures[0].big" alt=""> -->
+                    <img [src]="BaseShopImageURL + merchant.store_picture" alt="" style="min-height:150px;height:150px;max-height:150px;" class="appSmallImages" object-fit>
+                 </a>
+              </div>
+               <div class="product-info-wrapper">
+                  
+                  
+                  <div class="title" *ngIf="contentLoaded" >
+                     <h4 style="font-size: 14px;padding-bottom: 5px;">{{ merchant.store_name.length > 25 ? merchant.store_name.substring(0, 25) + '...' : merchant.store_name }}<br></h4>
+                  </div>
+                  <span class="category" *ngIf="contentLoaded">{{ (merchant.address_line1 + ' ' + merchant.address_line2 + ' ' + merchant.city + ' ' + merchant.pincode).substring(0, 42) + '...' }}</span>
+                  <!-- <div *ngIf="contentLoaded" class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+                      <div class="stars">
+                          <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                          <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                          <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                          <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                          <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                       </div>
+                   <p>${{product.price | number : '1.2-2'}}</p>
+                  </div> -->
+                  <div *ngIf="contentLoaded" class="btn-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+                      <a [routerLink]="['/product/', merchant.id]" mat-raised-button color="primary">View </a>
+                      <!-- <mat-icon class="mat-icon-lg mat-icon material-icons">shopping_cart</mat-icon> -->
+                  </div>
+
+                  <!-- <div class="icons" fxLayout="column">
+                     <a (click)="addToWishlist(product)"><mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon></a>
+                     <a (click)="openProductDialog(product)"><mat-icon>remove_red_eye</mat-icon></a>
+                     <a (click)="addToCompare(product)"><mat-icon>cached</mat-icon></a>
+                   </div> -->
+               </div>
+            </mat-card>
+      </div>        
+  </div>
+  <button mat-mini-fab class="swiper-button-prev swipe-arrow"><mat-icon>keyboard_arrow_left</mat-icon></button>
+  <button mat-mini-fab class="swiper-button-next swipe-arrow"><mat-icon>keyboard_arrow_right</mat-icon></button>
+</div>
+
