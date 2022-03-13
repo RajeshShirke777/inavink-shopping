@@ -1,0 +1,64 @@
+<!-- <app-breadcrumb [title]="'Shop'" [breadcrumb]="'Shop'"></app-breadcrumb> -->
+<div class="right-sidebar-wrapper sec-padding">
+    <div class="container ListSpace">
+      <div class="sidebar-wrapper" fxLayout='row' fxLayout.lt-md="column" >
+          
+            <div fxFlex="100" fxFlex.lt-sm="100" class="all-products pl-3" ngClass.gt-sm="p-left">
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxHide.lt-md="false" class="filter-row mat-elevation-z1 text-muted">
+                    <!-- <mat-form-field appearance="legacy" class="mobileHidden">
+                        <mat-label>Search product</mat-label>
+                        <input matInput placeholder="Placeholder" [(ngModel)]="key" (change)="onChangeEvent($event)">
+                        <mat-icon matSuffix (onclick)="onProductChange()">search</mat-icon>
+                      </mat-form-field> -->
+                    <button *ngIf="!sidenavOpen" mat-icon-button class="mobileHidden">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <div>
+                        <mat-form-field >
+                            <mat-label>Category</mat-label>
+                            <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)" >
+                              <mat-option value="0">All</mat-option>
+                              <mat-option *ngFor="let cat of categories" [value]="cat.id">
+                                  {{cat.name}} ({{cat.prodCount}})
+                                </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        <!-- <mat-select [formControl]="selectedCategory" (change)="onCategoryChange($event.target.value)" >
+                            <mat-option value="0">Select Categories</mat-option>
+                            <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
+                        </mat-select>                     -->
+                    </div>
+                    <div class="mobileHidden">
+                        <a [routerLink]="['/shops/list', selectedCategoryName]">View Shops</a>
+                        <!-- <button mat-icon-button (click)="changeViewType('list', 100)">
+                            <mat-icon>view_list</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="changeViewType('list', 33.3)">
+                            <mat-icon>view_module</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="changeViewType('list', 25)">
+                            <mat-icon>view_comfy</mat-icon>
+                        </button> -->
+                    </div>
+                  </div>
+                  <div [@Animation]="animation" fxLayout="row wrap" class="products-wrapper">
+                      <div *ngFor="let products of allItems | paginate: { itemsPerPage: 12, currentPage: page, totalItems:totalCount  }" fxFlex="50" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+                         <div class="product-box">
+                            <app-product [product]="products"></app-product>
+                         </div>
+                      </div>
+                  </div>
+    
+                  <div *ngIf="allItems.length > 0" fxLayout="row wrap ">
+                      <div fxFlex="100">
+                          <mat-card class="p-0 text-center no-shadow">
+                              <pagination-controls class="product-pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+                          </mat-card>
+                      </div>
+                  </div>
+                </div>
+           
+      </div>
+    </div>
+    </div>
+    
