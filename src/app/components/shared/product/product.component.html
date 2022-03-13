@@ -1,0 +1,40 @@
+<div class="product-item"  >
+  <mat-card fxLayout="column">
+    <div class="product-img">
+        <a class="product-link" [routerLink]="['/products/details', product.id]">
+          <!-- <img [src]="product.pictures[0].big" alt=""> -->
+          <img [src]="BaseProductImageUrl + product.image" alt="" style="min-height:150px;height:150px;max-height:150px;" class="appSmallImages">
+                   
+       </a>
+       <!-- <div class="icons" fxLayout="column">
+         <a (click)="addToWishlist(product)" class="hvr-icon-pulse-shrink"><mat-icon class="hvr-icon mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon></a>
+         <a (click)="openProductDialog(product)" class="hvr-icon-pulse-shrink"><mat-icon class="hvr-icon">remove_red_eye</mat-icon></a>
+         <a (click)="addToCompare(product)" class="hvr-icon-pulse-shrink"><mat-icon class="hvr-icon">cached</mat-icon></a>
+        </div> -->
+    </div>
+     <div class="product-info-wrapper">
+      <h4 class="price">&#x20B9;{{product.price}}  
+         <span *ngIf="product.discount_percentage > 0" style="color: black;font-size: 14px;"><del>{{product.mrp }}</del>
+         </span>
+         <!-- <span *ngIf="product.discount_percentage > 0" style="color: brown;font-size: 14px;"> {{product.discount_percentage}}% off</span> -->
+      </h4> 
+        <!-- <span class="category">{{product.name}}</span> -->
+        <div class="title">
+           <h4 style="font-size: 14px;padding-bottom: 5px;">{{product.name}}</h4>
+        </div>
+         
+      
+        <!-- <div class="stars">
+           <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+           <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+           <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+           <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+           <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+        </div> -->
+        <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+         <div>&nbsp;</div>
+        <a (click)="addToCart(product)" ><mat-icon class="mat-icon-lg mat-icon material-icons">shopping_cart</mat-icon></a>
+        </div>
+     </div>
+  </mat-card>
+</div>

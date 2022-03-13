@@ -1,0 +1,71 @@
+<div class="product-item-1 swiper-container" [swiper]="config" >
+    <div class="swiper-wrapper h-100">
+        <div *ngFor="let product of product" class="swiper-slide">
+            <mat-card fxLayout="column">
+              <div fxLayout="column">
+                <ngx-skeleton-loader
+                *ngIf="!contentLoaded"
+                  count="1"
+                  [theme]="{ width: '180px', 'border-radius': '0', height: '180px' }"
+                ></ngx-skeleton-loader>
+                <ngx-skeleton-loader
+                      *ngIf="!contentLoaded"
+                        count="2"
+                        [theme]="{ 'border-radius': '0', height: '20px', width: '180px'  }"
+                      ></ngx-skeleton-loader>
+              </div>
+                
+                <div class="product-img" *ngIf="contentLoaded">
+                    <a class="product-link" [routerLink]="['/products/details', product.id]">
+                      <!-- <img [src]="product.pictures[0].big" alt=""> -->
+                      <img [src]="BaseProductImageUrl + product.image" alt="" style="min-height:150px;height:150px;max-height:150px;" class="appSmallImages">
+                   </a>
+                </div>
+                 <div class="product-info-wrapper">
+                  <!-- <div *ngIf="contentLoaded" class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center"> -->
+                    <h4 class="price">&#x20B9;{{product.price}}  
+                      <span *ngIf="product.discount_percentage > 0" style="color: black;font-size: 14px;">
+                        <del>{{product.mrp }}</del>
+                      
+                      <!-- <span *ngIf="product.discount_percentage > 0" style="color: brown;font-size: 14px;" class="mobileHidden"> {{product.discount_percentage}}% off</span> -->
+                    </span>
+                    </h4> 
+                    <!-- <h6 >MRP : </h6> -->
+                     
+                        
+                    
+                    <!-- <div class="stars">
+                        <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                        <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                        <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                        <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                        <mat-icon class="mat-icon-xs mat-icon material-icons ng-star-inserted">star_rate</mat-icon>
+                     </div> -->
+                 <!-- <p>&#x20B9;{{product.price | number : '1.2-2'}}</p> -->
+                <!-- </div> -->
+                    <!-- <span class="category" *ngIf="contentLoaded">{{product.category}}</span> -->
+                    <div class="title" *ngIf="contentLoaded">
+                       <h4 style="font-size: 14px;padding-bottom: 5px;">{{  (product.name.length > 45 ? (product.name).substring(0,45) + '...' : (product.name).substring(0,48))}}</h4>
+                    </div>
+ 
+                    
+                    <div *ngIf="contentLoaded" class="btn-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+                        <a (click)="addToCart(product)" mat-raised-button color="primary">ADD TO CART </a> <!-- <mat-icon class="mat-icon-lg mat-icon material-icons">shopping_cart</mat-icon> -->
+ 
+                    </div>
+ 
+                    <!-- <div class="icons" fxLayout="column">
+                       <a (click)="addToWishlist(product)"><mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon></a>
+                       <a (click)="openProductDialog(product)"><mat-icon>remove_red_eye</mat-icon></a>
+                       <a (click)="addToCompare(product)"><mat-icon>cached</mat-icon></a>
+                     </div> -->
+                 </div>
+              </mat-card>
+              
+        </div>        
+    </div>
+    <button mat-mini-fab class="swiper-button-prev swipe-arrow" ><mat-icon>keyboard_arrow_left</mat-icon></button>
+    <button mat-mini-fab class="swiper-button-next swipe-arrow"><mat-icon>keyboard_arrow_right</mat-icon></button>
+  </div>
+ 
+ 
