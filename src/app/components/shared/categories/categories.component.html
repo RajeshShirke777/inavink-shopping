@@ -1,0 +1,40 @@
+<div class="category-contant">
+    <ul>
+        <li *ngFor="let category of categories;index as i;">
+            <!-- <a > -->
+
+                <a [ngClass]="{'no-brd':i===0}" style="padding-top: 15px!important;;padding-bottom: 15px!important;" fxLayout="row" fxLayoutAlign="space-between center">
+                    <!-- <span><mat-icon>phone</mat-icon>  {{category.name}} </span> -->
+                    <span>{{category.name}}</span>
+                    <span>
+                    <a [ngClass]="{'no-brd':0===0}"  style="display: inline;margin: 0%;text-align: right;font-size: x-small;" [routerLink]="['/shops/list/' + category.name]"> 
+                        <mat-icon>home</mat-icon>  ({{category.shopCount}})
+                    </a>
+                    <a [ngClass]="{'no-brd':0===0}"  style="display: inline;margin: 0%;text-align: right; font-size: x-small;" [routerLink]="['/products']" [queryParams]="{category:category.name}"> 
+                        <mat-icon>card_giftcard</mat-icon> ({{category.prodCount}})
+                    </a>
+                </span>
+                </a>
+                <!-- <div  fxFlex fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" >
+                    <div fxFlex.gt-sm="60%">{{category.name}} </div>
+                    <div fxFlex.gt-sm="40%">
+                        <a [ngClass]="{'no-brd':0===0}"  style="display: inline;margin: 0%;text-align: right;" [routerLink]="['/products/' + category.name]"> 
+                            <mat-icon>card_giftcard</mat-icon> (40)
+                        </a>
+                        <a [ngClass]="{'no-brd':0===0}"  style="display: inline;margin: 0%;text-align: right;" [routerLink]="['/products/' + category.name]"> 
+                            <mat-icon>home</mat-icon> (60)
+                        </a> </div>
+                </div> -->
+            
+            
+            <!--  -->
+        <!-- </a> -->
+        </li>
+        <!-- <li><a [routerLink]="['/products/Headphones/left-sidebar']">Headphones</a></li>
+        <li><a [routerLink]="['/products/Laptops/left-sidebar']">Laptops</a></li>
+        <li><a [routerLink]="['/products/Smartphones/left-sidebar']">Smart Phones</a></li>
+        <li><a [routerLink]="['/products/Cameras/left-sidebar']">Cameras</a></li>
+        <li><a [routerLink]="['/products/Tv & Audio/left-sidebar']">Tv & Audio</a></li>
+        <li><a [routerLink]="['/products/Watches/left-sidebar']">Watches</a></li> -->
+    </ul>
+</div>

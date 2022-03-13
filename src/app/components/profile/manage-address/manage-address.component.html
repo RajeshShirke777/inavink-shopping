@@ -1,0 +1,199 @@
+
+<div class="contact-page sec-padding">
+  <div class="container">    
+  <mat-card>
+    <div class="col-lg-7 map" style="min-width:200px;">
+      <div fxFlex>
+        <agm-map  [latitude]="m.lat" [longitude]="m.lng" [scrollwheel]="false" [zoom]="zoom" [usePanning]="true">
+          <agm-marker [latitude]="m.lat" [longitude]="m.lng"  [markerDraggable]="m.draggable"
+          (dragEnd)="markerDragEnd(m,$event)"></agm-marker>
+        </agm-map>
+      </div>
+      
+              
+  </div>
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" class="mt-20">
+      <div fxFlex="100"   fxFlex.gt-sm="60" class="left-info-panel contact-form">
+        <form fxLayout="row wrap" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+          <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            
+        <div class="title">
+          
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <h3>{{ CustomerAddress.id > 0 ? 'Edit' : 'Add New' }}</h3>
+            <mat-radio-group aria-label="Select an option" formControlName="addressType">
+              <mat-radio-button checked  value="Home">Home </mat-radio-button>&nbsp;
+              <mat-radio-button value="Work">Work </mat-radio-button>&nbsp;
+              <mat-radio-button value="Other">Other </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+          <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            <mat-form-field class="w-100">
+              <input type="text" id="txtLocation2Search"
+                  placeholder="Enter Location"
+                  aria-label="Number"
+                  matInput
+                  formControlName="locationDetails"
+                  [matAutocomplete]="auto"
+                  (keyup)="getAutocompletePredictions()">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredJSONDataOptions" [value]="option.description"  
+                (onSelectionChange)="onSelectedPlace(option)">                
+                <mat-icon>location_on</mat-icon>
+                <span>{{ option.description }}</span> <br>
+                <small>{{option.pincode}}</small>
+                
+                
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="formGroup.controls['locationDetails'].invalid">{{getError('locationDetails')}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+              <mat-form-field class="w-100">
+                  <input matInput placeholder="Enter Address Line 1"                  
+                  formControlName="addressLine1">
+                  <mat-error *ngIf="formGroup.controls['addressLine1'].invalid">{{getError('addressLine1')}}</mat-error>
+                </mat-form-field>
+          </div>
+          <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+              <mat-form-field class="w-100">
+                <input matInput placeholder="Enter Address Line 2" 
+                formControlName="addressLine2">
+                <mat-error *ngIf="formGroup.controls['addressLine2'].invalid">{{getError('addressLine2')}}</mat-error>
+                </mat-form-field>
+          </div>          
+          <div fxFlex="100"  fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-form-field class="w-50">
+              <input matInput placeholder="Contact Name" 
+              formControlName="contactName">
+              <mat-error *ngIf="formGroup.controls['contactName'].invalid">{{getError('contactName')}}</mat-error>
+              </mat-form-field>
+                <mat-form-field class="w-40">
+                  <input matInput placeholder="Contact No" 
+                  formControlName="contactNo">
+                  <mat-error *ngIf="formGroup.controls['contactNo'].invalid">{{getError('contactNo')}}</mat-error>
+                  </mat-form-field>
+                  
+           </div>
+          </div>
+          <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+              <button class="btn-project" mat-raised-button color="primary" type="submit">Submit</button>&nbsp;
+              <button class="btn-project" mat-raised-button type="button" (click)="resetForm()">Cancel</button>
+            </div>
+          </form>
+    </div>
+      <div fxFlex="100"   fxFlex.gt-sm="60" class="info-panel">
+    
+        <div class="title">
+            <h3>Address List</h3>
+        </div>
+  
+         <ul>
+          <li *ngFor="let address of AddressList;index as i;" style="border: 1px dotted;padding: 10px;margin-bottom: 10px;"
+          >
+          <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+            <!-- <i class="material-icons">home </i> -->
+            <h4>  
+              <div fxLayout="row" class="">
+                <div class="icon"><mat-icon>{{ address.address_type=='Home'? 'home' : address.address_type=='Work'? 'work' : 'location_on'}}</mat-icon></div>
+                <div class="">
+                  <p> Address</p>
+                </div>
+              </div>
+                </h4>
+            <div>
+            <button class="btn-project" mat-button color="primary" type="submit" (click)="editAddress(address)">  <i class="material-icons">edit </i> Edit</button>
+            <button class="btn-project" mat-button color="primary" type="submit" (click)="deleteAddress(address)">  <i class="material-icons">delete </i> Delete</button>
+          </div>
+         </div>
+          <div style="margin-bottom: 10px;">
+          <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center" style="padding-right: 10%;">
+          <div fxLayout="row" class="tel-box text-muted">
+           <div class="icon"><i class="mat-icon material-icons">account_circle </i></div>
+           <div class="text-muted">
+             <p> {{  address.contact_name }}</p>
+           </div>
+         </div>
+         <div fxLayout="row" class="tel-box text-muted">
+           <div class="icon"><i class="mat-icon material-icons">phone </i></div>
+           <div class="text-muted">
+             <p> {{  address.contact_no }}</p>
+           </div>
+         </div>
+       </div>
+          <p class="text-muted">
+            {{  address.address_line_1 + ' ' + address.address_line_2 + ' ' + address.location_details   }}</p>
+            
+           </div>
+            <!-- <div fxLayout="row" class="">
+           <button class="btn-project" mat-raised-button color="primary" type="submit" (click)="selectAddress(address);">  Deliver to this addresss</button>
+         </div> -->
+          </li>           
+           <!-- <li *ngFor="let address of AddressList;index as i;" >
+            <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+              <h4>  
+                <div fxLayout="row" class="">
+                  <div class="icon"><mat-icon>{{ address.address_type=='Home'? 'home' : address.address_type=='Work'? 'work' : 'location_on'}}</mat-icon></div>
+                  <div class="">
+                    <p> Address</p>
+                  </div>
+                </div>
+                  </h4>
+              <div>
+              <button class="btn-project" mat-button color="primary" type="submit" (click)="editAddress(address)">  <i class="material-icons">edit </i> Edit</button>
+              <button class="btn-project" mat-button color="primary" type="submit" (click)="deleteAddress(address)">  <i class="material-icons">delete </i> Delete</button>
+            </div>
+           </div>
+           <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center" style="padding-right: 10%;">
+           <div fxLayout="row" class="tel-box text-muted">
+            <div class="icon"><i class="mat-icon material-icons">account_circle </i></div>
+            <div class="text-muted">
+              <p> {{  address.contact_name }}</p>
+            </div>
+          </div>
+          <div fxLayout="row" class="tel-box text-muted">
+            <div class="icon"><i class="mat-icon material-icons">phone </i></div>
+            <div class="text-muted">
+              <p> {{  address.contact_no }}</p>
+            </div>
+          </div>
+        </div>
+           <p class="text-muted">
+             {{  address.address_line_1 + ' ' + address.address_line_2 + ' ' + address.location_details   }}</p>
+           </li> -->
+           <!-- <li>
+            <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+              <h4><mat-icon>location_on</mat-icon> Work</h4>
+              <div>
+              <button class="btn-project" mat-button color="primary" type="submit">  <i class="material-icons">edit </i> Edit</button>
+              <button class="btn-project" mat-button color="primary" type="submit">  <i class="material-icons">delete </i> Delete</button>
+            </div>
+          </div>
+            <br>
+            <p class="text-muted">123 Main Street, Anytown, CA 12345 – USA</p>
+           </li>
+           <li>   
+            <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+              <h4><mat-icon>location_on</mat-icon> Other</h4>
+              <div>
+              <button class="btn-project" mat-button color="primary" type="submit">  <i class="material-icons">edit </i> Edit</button>
+              <button class="btn-project" mat-button color="primary" type="submit">  <i class="material-icons">delete </i> Delete</button>
+            </div>
+          </div>
+            <br>
+            <p class=" text-muted text-muted">123 Main Street, Anytown, CA 12345 – USA</p>
+           </li> -->
+         </ul>
+      </div>
+      
+    </div>
+    
+  </mat-card>
+</div>
+</div>
+
