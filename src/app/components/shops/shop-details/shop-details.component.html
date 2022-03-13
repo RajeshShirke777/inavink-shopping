@@ -1,0 +1,130 @@
+<!-- <app-breadcrumb [title]="store_name" [breadcrumb]="'Shop'"></app-breadcrumb> -->
+
+<div class="left-sidebar-wrapper" style="padding-top: 30px;">
+  
+  <div class="container">
+    <h4 style="padding-bottom: 10px;">{{store_name}}</h4>
+    <div class="sidebar-wrapper" fxLayout='row' fxLayout.lt-md="column" >
+        <div fxFlex="25" fxFlex.lt-sm="100" class="filter-sidenav" perfectScrollbar>
+            <div class="toggles-wrapper" fxLayout="column" fxLayout.lt-md="column">
+                <div class="toggles" fxFlex.lt-md="100" *ngIf="merchant != null" >
+                  <div>
+                   <img [src]="BaseShopImageUrl + merchant.store_picture" [alt]="BaseShopImageUrl + merchant.store_picture" fxFlex.lt-md="100" class="product-img" style="height: 100%; width: 100%; object-fit: contain" />
+                  </div>
+                  <div class="title"><b>Address</b> : {{ merchant.address_line1 + ' ' + merchant.address_line2 + ' ' + merchant.city + ' ' + merchant.state + ' ' + merchant.pincode }} 
+                    
+                    <a [href]="googleMapUrl" class="mat-icon" target="_blank">
+                      <mat-icon>location_on</mat-icon></a>
+                      <br><b>Working hours</b> : {{merchant.working_hours}}
+                  </div>
+                  <div class="title" style="padding-top: 15px; padding-bottom: 15px; border-bottom: 1px dashed #dddddd;" fxLayout="row" fxLayoutAlign="space-between center">
+                    <a [href]="'tel: ' + merchant.phone_no"><mat-icon >phone</mat-icon> {{ merchant.phone_no }} </a>
+                      <a [href]="'tel: '+ merchant.secondary_contact_number"><mat-icon>phone</mat-icon> {{ merchant.secondary_contact_number }}</a>
+                 </div>
+                 <div *ngIf="merchant.delivery_charges != null && merchant.charge != null" class="title" style="padding-top: 15px;padding-bottom: 15px; border-bottom: 1px dashed #dddddd;">
+                  Delivery charges of &nbsp;&#x20B9;<b>{{ merchant.delivery_charges }}</b>&nbsp; on order below &nbsp;&#x20B9;<b>{{ merchant.charge}}</b>.
+               </div>
+               <div *ngIf="merchant.delivery_charges != null && merchant.charge == null" class="title" style="padding-top: 15px;padding-bottom: 15px; border-bottom: 1px dashed #dddddd;">
+                Delivery charges &nbsp;&#x20B9;<b>{{ merchant.delivery_charges }}</b>&nbsp; on all orders.
+             </div>
+             <div *ngIf="merchant.delivery_charges == null && merchant.charge == null" class="title" style="padding-top: 15px;padding-bottom: 15px; border-bottom: 1px dashed #dddddd;">
+              Free delivery on all orders.
+           </div>
+                  <!-- <div class="title"><mat-icon>phone</mat-icon> {{ merchant.phone_no }} <mat-icon>phone</mat-icon> {{ merchant.secondary_contact_number }}</div> -->
+                    <!-- <mat-accordion>
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <span>Categories</span>
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                      <app-categories></app-categories>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                  <span>Brands</span>
+                              </mat-panel-title>
+                            </mat-expansion-panel-header>
+  
+                            <div class="brands">
+                               <app-brands (brandChanged)="onBrendsChanged($event)"></app-brands>
+                             </div>
+                          </mat-expansion-panel>
+                          <mat-expansion-panel>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <span>Price</span>
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+  
+                              <app-price (priceFilters)="updatePriceFilters($event)"></app-price>
+                            </mat-expansion-panel>
+                      </mat-accordion> -->
+                </div>
+                    <!-- <div class="popular-products" fxFlex.lt-md="100">
+                      <app-popular-products></app-popular-products>
+                    </div> -->
+            </div>
+  
+            </div>
+          <div fxFlex="75" fxFlex.lt-sm="100" class="all-products" ngClass.gt-sm="p-left">
+              <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxHide.lt-md="false" class="filter-row mat-elevation-z1 text-muted">
+                
+                <!-- <app-main-carousel [slides]="banners"></app-main-carousel> -->
+                <mat-form-field appearance="legacy">
+                  <mat-label>Search product</mat-label>
+                  <input matInput placeholder="Placeholder" [(ngModel)]="key" (change)="onChangeEvent($event)">
+                  <mat-icon matSuffix (onclick)="onProductChange()">search</mat-icon>
+                </mat-form-field>
+              <button *ngIf="!sidenavOpen" mat-icon-button >
+                  <mat-icon>more_vert</mat-icon>
+              </button>
+              <div >
+                  <mat-form-field >
+                      <mat-label>Category</mat-label>
+                      <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)" >
+                        <mat-option value="0">All</mat-option>
+                        <mat-option *ngFor="let cat of categories" [value]="cat.id">
+                            {{cat.name}} ({{cat.prodCount}})
+                          </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  <!-- <mat-select [formControl]="selectedCategory" (change)="onCategoryChange($event.target.value)" >
+                      <mat-option value="0">Select Categories</mat-option>
+                      <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
+                  </mat-select>                     -->
+              </div>
+                  <!-- <div>
+  
+                      <button mat-icon-button (click)="changeViewType('list', 100)">
+                          <mat-icon>view_list</mat-icon>
+                      </button>
+                      <button mat-icon-button (click)="changeViewType('list', 33.3)">
+                          <mat-icon>view_module</mat-icon>
+                      </button>
+                      <button mat-icon-button (click)="changeViewType('list', 25)">
+                          <mat-icon>view_comfy</mat-icon>
+                      </button>
+                  </div> -->
+                </div>
+                <div [@Animation]="animation" fxLayout="row wrap" class="products-wrapper">
+                    <div *ngFor="let products of allItems | paginate: { itemsPerPage: 12, currentPage: page , totalItems:totalCount }" fxFlex="50" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+                       <div class="product-box">
+                          <app-product [product]="products"></app-product>
+                       </div>
+                    </div>
+                </div>
+  
+                <div *ngIf="allItems.length > 0" fxLayout="row wrap ">
+                    <div fxFlex="100">
+                        <mat-card class="p-0 text-center no-shadow">
+                            <pagination-controls class="product-pagination"  (pageChange)="onPageChanged($event)"></pagination-controls>
+                        </mat-card>
+                    </div>
+                </div>
+              </div>
+    </div>
+  </div>
+  </div>
+  
