@@ -1,0 +1,299 @@
+<!-- <app-breadcrumb [title]="'Checkout'" [breadcrumb]="'Checkout'"></app-breadcrumb> -->
+
+<div class="container ListSpace">
+  <div class="checkout sec-padding">
+      <div fxLayout="row wrap" class="">
+          <div class="billing-details  pr-15" fxFlex="100" fxFlex.gt-md="40" fxFlex.md="40">
+            <div class="title" style="margin-bottom: 10px;">
+              <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+                <h4><mat-slide-toggle (change)="calculateTotal()" [(ngModel)]="isChecked">{{isChecked ?'Home Delivey':'Pickup from Store'}}</mat-slide-toggle></h4>
+                <button class="btn-project row" mat-raised-button color="primary" type="submit" [routerLink]="['/profile/manage-address']" 
+                *ngIf="isChecked == true">  Add New</button>
+              </div>
+            </div>
+             
+        
+               <ul *ngIf="isChecked == true">
+                 <span *ngIf="AddressList.length == 0">No record found. Please add address for Home delivery.</span>
+                 <li *ngFor="let address of AddressList;index as i;" style="border: 1px dotted;padding: 10px;margin-bottom: 10px;"
+                 [ngStyle]="{'background-color': address.id==customerAddress.id?'#D9D9D9':'transparent'}">
+                  <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center">
+                    <!-- <i class="material-icons">home </i> -->
+                    <h4>  
+                      <div fxLayout="row" class="">
+                        <div class="icon"><mat-icon>{{ address.address_type=='Home'? 'home' : address.address_type=='Work'? 'work' : 'location_on'}}</mat-icon></div>
+                        <div class="">
+                          <p> Address</p>
+                        </div>
+                      </div>
+                        </h4>
+                    <div>
+                   </div>
+                 </div>
+                 <div style="margin-bottom: 10px;">
+                 <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center" style="padding-right: 10%;">
+                 <div fxLayout="row" class="tel-box text-muted">
+                  <div class="icon"><i class="mat-icon material-icons">account_circle </i></div>
+                  <div class="text-muted">
+                    <p> {{  address.contact_name }}</p>
+                  </div>
+                </div>
+                <div fxLayout="row" class="tel-box text-muted">
+                  <div class="icon"><i class="mat-icon material-icons">phone </i></div>
+                  <div class="text-muted">
+                    <p> {{  address.contact_no }}</p>
+                  </div>
+                </div>
+              </div>
+                 <p class="text-muted">
+                   {{  address.address_line_1 + ' ' + address.address_line_2 + ' ' + address.location_details   }}</p>
+                   
+                  </div>
+                   <div fxLayout="row" class="">
+                  <button class="btn-project" mat-raised-button color="primary" type="submit" (click)="selectAddress(address);">  Deliver to this addresss</button>
+                </div>
+                 </li>                 
+               </ul>
+               <ul *ngIf="isChecked == false">
+                <li style="border: 1px dotted;padding: 10px;margin-bottom: 10px;" 
+                [ngStyle]="{'background-color': merchant.id>0?'#D9D9D9':'transparent'}">
+                 <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 10px;">
+                   <!-- <i class="material-icons">home </i> -->
+                   <h4>  
+                     <div fxLayout="row" class="">
+                       <div class="icon"></div>
+                       <div class="">
+                        <h4>{{merchant.store_name}}</h4>
+                       </div>
+                     </div>
+                       </h4>
+                   <div>
+                  </div>
+                </div>
+                <div style="margin-bottom: 10px;">
+                
+                <p class="text-muted">
+                  {{ merchant.address_line1 + ' ' + merchant.address_line2 + ' ' + merchant.city + ' ' 
+                  + merchant.state + ' ' + merchant.pincode }} 
+                  <a [href]="googleMapUrl" class="mat-icon" target="_blank">
+                    <mat-icon>location_on</mat-icon></a></p>
+                  
+                 </div>
+                 <div class="price-wrap" fxLayout="row" fxLayoutAlign="space-between center" style="padding-right: 10%;">
+                  <div fxLayout="row" class="tel-box text-muted">
+                   <div class="icon"><i class="mat-icon material-icons">phone </i></div>
+                   <div class="text-muted">
+                     <p> {{  merchant.phone_no }}</p>
+                   </div>
+                 </div>
+                 <div fxLayout="row" class="tel-box text-muted">
+                   <div class="icon"><i class="mat-icon material-icons">phone </i></div>
+                   <div class="text-muted">
+                     <p> {{  merchant.phone_no }}</p>
+                   </div>
+                 </div>
+               </div>
+                </li>                 
+              </ul>
+              <!-- <form fxLayout="row wrap">
+                  <div  fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" class="mt-20 pr-5" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="First name (required)" #name="ngModel" ngModel name="name" required>
+                          <mat-error *ngIf="name.invalid">Please enter a valid message</mat-error>
+                        </mat-form-field>
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" class="pl-5 mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Last name (required)" #email="ngModel" ngModel name="email" required>
+                          <mat-error *ngIf="email.invalid">Please enter a valid message</mat-error>
+                        </mat-form-field>
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-sm="100" class="mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Company name (optional)" #subject="ngModel" ngModel name="subject">
+                        </mat-form-field>
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-sm="100" class="mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Address" #address="ngModel" ngModel name="address">
+                          <mat-error *ngIf="address.invalid">Please enter a valid message</mat-error>
+                        </mat-form-field>
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-sm="100" class="mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Town/city" #town="ngModel" ngModel name="town/city">
+                          <mat-error *ngIf="town.invalid">Please enter a valid message</mat-error>
+                        </mat-form-field>
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" class="mt-20 pr-5" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="State / Country (required)" #state="ngModel" ngModel name="state" required>
+                          <mat-error *ngIf="state.invalid">Please enter a valid message</mat-error>
+                        </mat-form-field>
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" class="pl-5 mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Postcode / zip (required)" #postcode="ngModel" ngModel name="postcode" required>
+                          <mat-error *ngIf="postcode.invalid">Please enter a valid message</mat-error>
+                        </mat-form-field>
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" class="mt-20 pr-5" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Email Address (required)" #email="ngModel" ngModel name="email" required>
+                          <mat-error *ngIf="email.invalid">Please enter a valid message</mat-error>
+                        </mat-form-field>
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50" class="pl-5 mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <input matInput placeholder="Phone (required)" #phone="ngModel" ngModel name="phone" required>
+                          <mat-error *ngIf="phone.invalid">Please enter a valid message</mat-error>
+                        </mat-form-field>
+                  </div>
+                  <div class="add-info">
+                    <h3>Additional information</h3>
+                    <p class="text-muted">Order notes (optional)</p>
+
+                  </div>
+                  <div  fxFlex="100" fxFlex.gt-sm="100" class="mt-20" ngClass.sm="mt-10" ngClass.xs="mt-10">
+                      <mat-form-field class="w-100">
+                          <textarea placeholder="Post content" matInput rows="4" ngModel name="content"></textarea>
+                        </mat-form-field>
+                  </div>
+                  <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                      <button class="btn-project" mat-raised-button  color="primary" type="submit">Submit Review</button>
+                    </div>
+                  </form> -->
+          </div>
+          <div class="cart-wrapper mainOrder-wrapper pl-15 " fxFlex="100" fxFlex.gt-md="60" fxFlex.md="60">
+            
+            <mat-card  class="p-0">
+              <div class="mat-table cart-table" >
+                 <div class="mat-header-row" style="min-width: auto;">
+                  <div class="mat-header-cell mobileVisible">Order Details</div>
+                    <div class="mat-header-cell mobileHidden">Product</div>
+                    <div class="mat-header-cell mobileHidden">Quantity</div>
+                    <div class="mat-header-cell mobileHidden">Price</div>
+                    <div class="mat-header-cell mobileHidden">Total</div>
+                 </div>
+                 <div class="mat-row" style="min-width: auto;" *ngFor="let item of buyProducts">
+                  <div class="mat-cell">{{ item.product.name }}  <b>x {{  item.quantity }}</b></div>
+                  
+                  <!-- <div class="mat-header-cell">Price</div> -->
+                  <div class="mat-cell mobileHidden"> <span>
+                    {{  item.quantity }}
+                    </span></div>
+                  <div class="mat-cell mobileHidden"><span>
+                    &#x20B9; {{ item.product.price }}
+                    </span></div>
+                    <div class="mat-cell"><span>
+                      &#x20B9; {{ item.product.price * item.quantity }}
+                      </span></div>
+               </div>
+               <div class="mat-row" style="min-width: auto;min-height: 30px;" >
+                <div class="mat-cell">Sub Total</div>
+                <div class="mat-cell mobileHidden"></div>
+                <div class="mat-cell mobileHidden"></div>
+                <div class="mat-cell">
+                  &#x20B9; <span class="new-price"> {{ getSubTotal()  | async }}</span>
+                </div>
+                </div>
+                <div class="mat-row" style="min-width: auto;min-height: 30px;" >
+                  <div class="mat-cell">Shipping Fee</div>
+                  <div class="mat-cell mobileHidden"></div>
+                  <div class="mat-cell mobileHidden"></div>
+                  <div class="mat-cell">
+                    &#x20B9; <span class="new-price"> {{ this.shippingFee }}</span>
+                  </div>
+                  </div>
+                  <div class="mat-row" style="min-width: auto;min-height: 30px;" >
+                    <div class="mat-cell "><h4>Total Payable</h4></div>
+                    <div class="mat-cell mobileHidden"></div>
+                    <div class="mat-cell mobileHidden"></div>
+                    <div class="mat-cell"><h4>
+                      &#x20B9; <span class="new-price"> {{ this.total }}</span></h4>
+                    </div>
+                    </div>
+                    <div class="mobileVisible">
+                    <div class="mat-row" style="min-width: auto;min-height: 30px;">
+                      <div class="mat-cell mobileVisible"><h4>Payment Options</h4></div>
+                      
+                      <div class="mat-cell">
+                        <mat-checkbox class="example-margin" [(ngModel)]="paymentOption.checked" 
+                        *ngFor="let paymentOption of paymentOptions" >{{ paymentOption.name }}</mat-checkbox>
+                      </div>
+                      </div>
+                    </div>
+                </div>
+                
+                <div class="paymentFinal mobileHidden">
+                  <section class="example-section">
+                    <h4>Payment Options : </h4>
+                    <mat-checkbox class="example-margin" [(ngModel)]="paymentOption.checked" 
+                    *ngFor="let paymentOption of paymentOptions" >{{ paymentOption.name }}</mat-checkbox>
+                    <!-- <mat-checkbox class="example-margin">Swipe On Delivery</mat-checkbox>
+                    <mat-checkbox class="example-margin">Scan On Delivery</mat-checkbox> -->
+                  </section>
+                  
+                  <!-- <mat-radio-group>
+                    <mat-radio-button fxLayout="column" *ngFor="let payment of paymantWay" [value]="payment">{{payment}}</mat-radio-button>
+                  </mat-radio-group> -->
+                </div>
+                <div class="order">
+                  <button class="btn-project" mat-raised-button color="primary" type="submit" (click)="submitOrder()">PLACE ORDER</button>
+                </div>
+            </mat-card>
+          </div>
+        <!-- </div> --> 
+            <!-- <div class="main-order " >
+              <div class="order-box">
+                  <div class="title-box">
+                      <div>Product <span class="tl-amount"> Shipping</span><span class="tl-amount"> Total</span></div>
+                  </div>
+                  <ul class="price-list" *ngIf='buyProducts.length'>
+                    <li *ngFor="let item of buyProducts">
+                       {{ item.product.name }} × {{ item.quantity }}
+                       <span>
+                        &#x20B9; 50
+                        </span>
+                      <span>
+                        &#x20B9; {{ item.product.price * item.quantity }}
+                        </span>
+                    </li>
+                </ul>
+                <ul class="quantity" *ngIf='buyProducts.length <= 0'>
+                  <li class="empty-checkout"> There are no products in cart </li>
+                 </ul>
+                <ul class="total-amount">
+                  <li>
+                    Subtotal<span class="amount"> &#x20B9; {{ getTotal() | async }}</span>
+                  </li>
+                  <li *ngIf='buyProducts.length'>
+                    Shipping
+                   <div class="shipping">
+                      <div class="shopping-option">
+                        <mat-radio-group>
+                          <mat-radio-button *ngFor="let payment of payments" [value]="payment">{{payment}}</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+
+                   </div>
+                  </li>
+              </ul>
+              <ul class="total">
+                <li>Total <span class="count"> &#x20B9; {{ getTotal() | async}}</span></li>
+            </ul>
+            <div class="paymentFinal">
+              <mat-radio-group>
+                <mat-radio-button fxLayout="column" *ngFor="let payment of paymantWay" [value]="payment">{{payment}}</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="order">
+              <button class="btn-project" mat-raised-button color="primary" type="submit">PLACE ORDER</button>
+            </div>
+               </div>
+          </div> -->
+          <!-- </div> -->
+
+       </div>
+    </div>
+</div>

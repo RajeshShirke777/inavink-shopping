@@ -1,0 +1,10 @@
+@media only screen and (max-width: 600px) {
+    .mat-row, .mat-header-row {
+        min-width: 0px !important;
+        padding: 0 0px !important;
+    }
+
+    .topBarSpace {
+        margin-top: 180px !important;
+    }
+}

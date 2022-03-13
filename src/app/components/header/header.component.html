@@ -1,0 +1,509 @@
+
+
+<mat-sidenav-container fullscreen [hasBackdrop]="true">
+  <mat-sidenav [opened]="false" mode="over"  #start  class="sidenav mySideNav" >
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%; ">
+      <div>
+        <mat-icon class="mat-icon-lg mat-icon material-icons">account_circle</mat-icon> 
+        <span *ngIf="isLoggedIn">{{UserName}}</span><span *ngIf="!isLoggedIn">Login</span>
+      </div>
+    <button mat-icon-button color="warn" class="close" (click)="start.close()">
+      <mat-icon color="warn">close</mat-icon>
+    </button>
+  </div>
+  
+    <div class="divider"></div>
+    <div class="sidebar-items" fxLayout="column" >
+        <app-sidebar *ngFor="let item of navItems" [item]="item"></app-sidebar>
+        
+    </div>
+</mat-sidenav>
+<div class="secondToolbar2" [ngClass]="{'mat-elevation-z5' : true, 'sticky' : true}">
+  <div class="home-header" [ngClass]="settings.theme"> 
+<mat-toolbar  color="primary" class="kuro"
+>
+<mat-toolbar-row class="container" fxLayout="column" fxLayout.gt-sm="row"   fxLayoutGap="20px" fxlayoutalign="space-between center">
+
+      
+  <div class="logo">
+    
+    <a [routerLink]="['/home']" routerLinkActive="router-link-active" ><img style="height: 50px;" src="assets/images/Inavink_invert_logo.png"></a>
+</div>
+
+
+    <div  fxflexoffset.gt-sm="10"  fxFlex class="search-form">
+        <form class="search-form" fxLayout="row">
+         
+            <div class="form-wrap">         
+                   <input type="text" id="txtStickyLocationSearch"
+                  placeholder="Enter Location"
+                  aria-label="Number"
+                  matInput
+                  [formControl]="jsonControl"
+                  [matAutocomplete]="auto"
+                  (keyup)="getAutocompletePredictions()">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredJSONDataOptions" [value]="option.description"  
+                (onSelectionChange)="onSelectedPlace(option)">                
+                <mat-icon>location_on</mat-icon>
+                <span>{{ option.description }}</span> <br>
+                <small>{{option.pincode}}</small>
+                
+                
+              </mat-option>
+            </mat-autocomplete>
+              
+            </div>
+            <div class="form-wrap" style="padding-left: 8px;color: white;max-width: 8px; background-color: transparent;">
+              &nbsp;
+            </div>
+            <div class="form-wrap">
+              <input type="text" id="txtStickySearch"
+                placeholder="Search Products"
+                aria-label="Number"
+                matInput
+                [formControl]="productsControl"
+                [matAutocomplete]="auto2"
+                (keyup)="getProductPredictions()">
+          <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+            <mat-option *ngFor="let option of filteredProductsOptions" [value]="option.name"
+            (onSelectionChange)="onSelectedProduct(option)"  
+            [routerLink]="['/products']" [queryParams]="{category:'all',searchkey:option.name}">  
+            <!-- [routerLink]="['/products/details', option.id]">    -->
+              
+                <span>{{ option.name }}</span>
+              
+              
+            </mat-option>
+          </mat-autocomplete>
+            </div>
+        </form>
+       </div>
+    <div class="call-bucket-wrap" fxLayout="row" fxLayout.sm="row" fxLayoutAlign="center center" >
+        <!-- <div class="info-message-icon"  fxLayout="row" fxLayoutAlign="center center">
+          <div class="icon"  fxLayout="row" >
+              <mat-icon class="mat-icon-lg mat-icon material-icons">call</mat-icon>
+          </div>
+            <div class="info-text">
+              <p>Helpline 2:</p>
+               <span>02(981)336 111</span>
+            </div>
+        </div> -->
+        <div class="main-menu-wrapper-2" fxLayout="row" fxLayoutAlign="space-between center" >
+            <mat-toolbar class="top-navbar top menu">
+              <app-shopping-widgets [shoppingCartItems]="shoppingCartItems"></app-shopping-widgets>
+            </mat-toolbar>
+          </div>
+          <div class="main-menu-wrapper-2" fxLayout="row" fxLayoutAlign="center center" >
+            <mat-toolbar class="top-navbar top menu">
+              
+              <div class="commerce-buttons" fxLayout="row" fxLayoutAlign="end center">
+                <button mat-button class="flex-row-button mat-button" fxLayoutAlign="space-between center" [routerLink]="['/accounts/login']">
+                  <div class="mat-button-wrapper" *ngIf="isLoggedIn == false">
+                    <div fxLayout="row" class="tel-box">
+                      <div class="icon" ><mat-icon class="mat-icon-lg mat-icon material-icons">account_circle</mat-icon></div>
+                      <div class="text">
+                        <span>Sign In</span>
+                      </div>
+                    </div>
+              </div>
+            </button>
+                <button  *ngIf="isLoggedIn" mat-button class="flex-row-button mat-button" fxLayoutAlign="space-between center" [matMenuTriggerFor]="menu">
+                  <div class="mat-button-wrapper">
+                    <div fxLayout="row" class="tel-box">
+                      <div class="icon" ><mat-icon class="mat-icon-lg mat-icon material-icons">account_circle</mat-icon></div>
+                      <div class="text">
+                        <span>{{UserName}}</span>
+                      </div>
+                      <div class="icon" ><mat-icon>arrow_drop_down</mat-icon></div>
+                    </div>
+                  </div>
+                </button>
+                <mat-menu class="spCard-main"  #menu="matMenu"> 
+                  <div class="spCard-dropdown">                    
+                    <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                       <mat-icon>grid_on</mat-icon> &nbsp;
+                       <a [routerLink]="['/orders/myorders']" routerLinkActive="router-link-active" >
+                       
+                        <p>&nbsp;My Orders</p></a>
+                        
+                    </div>
+                    <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                      <mat-icon>location_on</mat-icon> &nbsp;
+                      <a [routerLink]="['/profile/manage-address']" routerLinkActive="router-link-active" >
+                      
+                       <p>&nbsp;Manage Address</p></a>
+                       
+                   </div>
+                    <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                      <mat-icon>account_circle</mat-icon>
+                      <a [routerLink]="['/myprofile']" routerLinkActive="router-link-active" >
+                         <p>&nbsp; My Profile</p></a>
+                       
+                   </div>
+                   <!-- <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                    <mat-icon>manage_accounts</mat-icon>
+                    <a [routerLink]="['/accounts/changepassword']" routerLinkActive="router-link-active" >
+                       <p>&nbsp; Change Password</p></a>
+                     
+                 </div> -->
+                        <!-- <mat-divider></mat-divider> -->
+                        <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                          <mat-icon>power_settings_new</mat-icon>
+                          <a (click)="logOut()" >
+                             <p>&nbsp; Log Out</p></a>
+                           
+                       </div>
+                        
+                  </div>
+             </mat-menu>
+              </div>
+            </mat-toolbar>
+          </div>
+          <!-- <div class="info-message-icon"  fxLayout="row" fxLayoutAlign="center center">
+            <div class="icon"  fxLayout="row" >
+                <mat-icon class="mat-icon-lg mat-icon material-icons">person</mat-icon>
+            </div>
+              <div class="info-text">
+                <p>My Account</p>
+                
+              </div>
+             
+              
+          </div> -->
+      </div>
+</mat-toolbar-row>
+</mat-toolbar>
+  </div>
+</div>
+<div class="secondToolbar" [ngClass]="{'mat-elevation-z5' : true, 'sticky' : true}" >
+  
+  <div class="home-header" [ngClass]="settings.theme"> 
+<mat-toolbar  color="primary" class="kuro"
+>
+<mat-toolbar-row class="container" fxLayout="column" fxLayout.gt-sm="row"   fxLayoutGap="20px" fxlayoutalign="center center">
+
+ 
+      <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;" id="mobileHeader">
+        
+    <mat-toolbar class="top-navbar top menu" [ngClass]="{'markhidden' : isSticky === true}" >
+      <span fxHide="false" fxHide.gt-sm  >
+        <button mat-icon-button (click)="start.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        
+     </span>
+       <a [routerLink]="['/home']" routerLinkActive="router-link-active" style="padding: 0px !important;" 
+       ><img style="height: 50px;" src="assets/images/Inavink_invert_logo_mobile.png"></a>
+      </mat-toolbar>  
+      
+    <mat-toolbar class="top-navbar top menu" [ngClass]="{'markhidden' : isSticky === true}">
+       <app-shopping-widgets [shoppingCartItems]="shoppingCartItems" style="width: 100%;"></app-shopping-widgets>
+        
+    </mat-toolbar>  
+    </div>
+      
+
+   
+   
+       
+
+    <div  fxflexoffset.gt-sm="10"  fxFlex class="search-form">
+        <form class="search-form" fxLayout="row"  >
+          
+          <!--   <div class="form-wrap" [ngClass]="{'markhidden' : isSticky === true}">         
+                   <input type="text" id="txtStickyLocationSearch2"
+                  placeholder="Enter Location"
+                  aria-label="Number"
+                  matInput
+                  [formControl]="jsonControl"
+                  [matAutocomplete]="auto"
+                  (keyup)="getAutocompletePredictions()">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredJSONDataOptions" [value]="option.description"  
+                (onSelectionChange)="onSelectedPlace(option)">                
+                <mat-icon>location_on</mat-icon>
+                <span>{{ option.description }}</span> <br>
+                <small>{{option.pincode}}</small>
+                
+                
+              </mat-option>
+            </mat-autocomplete>
+              
+            </div> -->
+            <!-- <div class="form-wrap" style="padding-left: 8px;color: white;max-width: 8px; background-color: transparent;" [ngClass]="{'markhidden' : isSticky === true}">
+              &nbsp;
+            </div> -->
+            <span fxHide="false" fxHide.gt-sm  [ngClass]="{'markhidden' : isSticky === false,'markdisplay' : isSticky === true}">
+              <button mat-icon-button (click)="start.toggle()">
+                  <mat-icon>menu</mat-icon>
+              </button>
+              
+           </span>
+            <div class="form-wrap">
+              <input type="text" id="txtStickySearch2"
+                placeholder="Search Products"
+                aria-label="Number"
+                matInput
+                [formControl]="productsControl"
+                [matAutocomplete]="auto2"
+                (keyup)="getProductPredictions()">
+          <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+            <mat-option *ngFor="let option of filteredProductsOptions" [value]="option.name"
+            (onSelectionChange)="onSelectedProduct(option)"  
+            [routerLink]="['/products']" [queryParams]="{category:'all',searchkey:option.name}"> 
+            <!-- [routerLink]="['/products/details', option.id]">    -->  
+              
+                <span>{{ option.name }}</span>
+              
+              
+            </mat-option>
+          </mat-autocomplete>
+            </div>
+        </form>
+       </div>
+       <div  fxflexoffset.gt-sm="10"  fxFlex class="search-form" (click)="openModal('custom-modal-1')" style="margin-left: 10px; font-size: medium;font-weight: lighter;">
+         <mat-icon class="mat-icon-xs mat-icon material-icons location_on">location_on</mat-icon> 
+         Deliver to {{ selectedLocation }} 
+         <mat-icon >arrow_drop_down</mat-icon>
+       </div>
+      
+</mat-toolbar-row>
+</mat-toolbar>
+  </div>
+</div>
+<div class="home-header" [ngClass]="settings.theme" *ngIf="false"> 
+  <mat-toolbar color="primary" class="kuro" >
+    <mat-toolbar-row class="container" fxLayout="column" fxLayout.gt-sm="row"   fxLayoutGap="20px" fxlayoutalign="space-between center">
+      
+      <div class="logo">
+        
+        <a [routerLink]="['/home']" routerLinkActive="router-link-active" ><img style="height: 50px;" src="assets/images/Inavink_invert_logo.png"></a>
+    </div>
+    <div  fxflexoffset.gt-sm="10"  fxFlex class="search-form">
+        <form class="search-form" fxLayout="row">
+         
+            <div class="form-wrap"> 
+              <input type="text" id="txtLocationSearch"
+                  placeholder="Enter Location"
+                  aria-label="Number"
+                  matInput
+                  [formControl]="jsonControl"
+                  [matAutocomplete]="auto"
+                  (keyup)="getAutocompletePredictions()">
+                <!-- [formControl]="locationControl"
+                [matAutocomplete]="auto"
+                (keyup)="getProductPredictions2()"> -->
+                  <!--  -->
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredJSONDataOptions" [value]="option.description"  
+                (onSelectionChange)="onSelectedPlace(option)">                
+                <mat-icon>location_on</mat-icon>
+                <span>{{ option.description }}</span> <br>
+                <small>{{option.pincode}}</small>
+                
+                
+              </mat-option>
+            </mat-autocomplete>
+              <!-- <input matInput
+              matValidateAddress
+              matGoogleMapsAutocomplete
+              #matGoogleMapsAutocomplete="matGoogleMapsAutocomplete"
+              placeholder="enter location"
+              class="form-control"
+              [country]="de"
+              (onAutocompleteSelected)="onAutocompleteSelected($event)"
+              (onLocationSelected)="onLocationSelected($event)"
+              (onGermanAddressMapped)="onGermanAddressMapped($event)"
+              > -->
+              
+            </div>
+            <div class="form-wrap" style="padding-left: 8px;color: white;max-width: 8px; background-color: transparent;">
+              &nbsp;
+            </div>
+            <div class="form-wrap">
+              <input type="text" id="txtSearch"
+                placeholder="Search Products"
+                aria-label="Number"
+                matInput
+                [formControl]="productsControl"
+                [matAutocomplete]="auto2"
+                (keyup)="getProductPredictions()">
+                <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredProductsOptions" [value]="option.name"
+                  (onSelectionChange)="onSelectedProduct(option)" 
+                  [routerLink]="['/products']" [queryParams]="{category:'all',searchkey:option.name}"> 
+            <!-- [routerLink]="['/products/details', option.id]">    --> 
+                    
+                      <span>{{ option.name }}</span>                    
+                    
+                  </mat-option>
+              
+              
+          </mat-autocomplete>
+            </div>
+        </form>
+       </div>
+    <div class="call-bucket-wrap" fxLayout="row" fxLayout.sm="row" fxLayoutAlign="center center" >
+        <!-- <div class="info-message-icon"  fxLayout="row" fxLayoutAlign="center center">
+          <div class="icon"  fxLayout="row" >
+              <mat-icon class="mat-icon-lg mat-icon material-icons">call</mat-icon>
+          </div>
+            <div class="info-text">
+              <p>Helpline 2:</p>
+               <span>02(981)336 111</span>
+            </div>
+        </div> -->
+        <div class="main-menu-wrapper-2" fxLayout="row" fxLayoutAlign="space-between center" >
+            <mat-toolbar class="top-navbar top menu">
+              <app-shopping-widgets [shoppingCartItems]="shoppingCartItems"></app-shopping-widgets>
+            </mat-toolbar>
+          </div>
+          <div class="main-menu-wrapper-2" fxLayout="row" fxLayoutAlign="center center" >
+            <mat-toolbar class="top-navbar top menu">
+              
+              <div class="commerce-buttons" fxLayout="row" fxLayoutAlign="end center">
+                <button *ngIf="isLoggedIn == false" mat-button class="flex-row-button mat-button" fxLayoutAlign="space-between center" [routerLink]="['/accounts/login']">
+                  <div class="mat-button-wrapper" >
+                    <div fxLayout="row" class="tel-box">
+                      <div class="icon"><mat-icon class="mat-icon-lg mat-icon material-icons">account_circle</mat-icon></div>
+                      <div class="text">
+                        <span>Sign In</span>
+                      </div>
+                    </div>
+              </div>
+            </button>
+                <button  *ngIf="isLoggedIn" mat-button class="flex-row-button mat-button" fxLayoutAlign="space-between center" [matMenuTriggerFor]="menu">
+                  <div class="mat-button-wrapper">
+                    <div fxLayout="row" class="tel-box">
+                      <div class="icon"><mat-icon class="mat-icon-lg mat-icon material-icons">account_circle</mat-icon></div>
+                      <div class="text">
+                        <span>{{UserName}}</span>
+                      </div>
+                      <div class="icon"><mat-icon>arrow_drop_down</mat-icon></div>
+                    </div>
+                  </div>
+                </button>
+                <mat-menu class="spCard-main"  #menu="matMenu"> 
+                  <div class="spCard-dropdown">                    
+                    <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                       <mat-icon>grid_on</mat-icon> &nbsp;
+                       <a [routerLink]="['/orders/myorders']" routerLinkActive="router-link-active" >My Orders</a>
+                       <!-- <a [routerLink]="['/myorders']" routerLinkActive="router-link-active" >
+                       
+                        <p>&nbsp;My Orders</p></a> -->
+                        
+                    </div>
+                    <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                      <mat-icon>manage_accounts</mat-icon> &nbsp;
+                      <a [routerLink]="['/profile/manage-address']" routerLinkActive="router-link-active" >Manage Address</a>                       
+                   </div>
+                    <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                      <mat-icon>manage_accounts</mat-icon>
+                      <a [routerLink]="['/profile/myprofile']" routerLinkActive="router-link-active" >
+                         <p>&nbsp; My Profile</p></a>
+                       
+                   </div>
+                   <!-- <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                    <mat-icon>manage_accounts</mat-icon>
+                    <a [routerLink]="['/accounts/changepassword']" routerLinkActive="router-link-active" >
+                       <p>&nbsp; Change Password</p></a>
+                     
+                 </div> -->
+                        <!-- <mat-divider></mat-divider> -->
+                        <div class="card-list-title" fxLayout="row" fxLayoutAlign="start start">
+                          <mat-icon>manage_accounts</mat-icon>
+                          <a (click)="logOut()" href="#">
+                             <p>&nbsp; Log Out</p></a>
+                           
+                       </div>
+                        
+                  </div>
+             </mat-menu>
+              </div>
+            </mat-toolbar>
+          </div>
+          <!-- <div class="info-message-icon"  fxLayout="row" fxLayoutAlign="center center"> -->
+            <!-- <div class="commerce-buttons" fxLayout="row" fxLayoutAlign="end center">
+
+              <button mat-button class="flex-row-button mat-button" fxLayoutAlign="space-between center" [matMenuTriggerFor]="menu">
+                <div class="mat-button-wrapper">
+                    <div class="" >
+                        <mat-icon class="mat-icon-lg mat-icon material-icons">local_grocery_store</mat-icon>
+                        <span class="cart-count-wrapper">{{shoppingCartItems.length}}</span>
+                      </div>
+                      <div class="top-cart">
+                          <span>{{ getTotal() | async | currency:productService?.currency:'symbol' }}</span>
+                      </div>
+                </div>
+              </button>
+            </div> -->
+            <!-- <div class="icon"  fxLayout="row" >
+                <mat-icon class="mat-icon-lg mat-icon material-icons">person</mat-icon>
+            </div>
+              <div class="info-text">
+                <p>My Account</p>
+                 
+              </div> -->
+              <!-- <div class="widget-text">
+                <a fxShow="false" fxShow.gt-xs [routerLink]="['/my-account']" routerLinkActive="router-link-active" ><mat-icon>person</mat-icon>My Account</a>
+              </div> -->
+              
+          <!-- </div> -->
+      </div>
+</mat-toolbar-row>
+</mat-toolbar>
+
+</div>
+
+<jw-modal id="custom-modal-1">
+  
+  <div class="home-header"> 
+  <mat-toolbar style="background-color: transparent;"
+>
+<mat-toolbar-row class="container" fxLayout="column" fxLayout.gt-sm="row"   fxLayoutGap="20px" fxlayoutalign="space-between center" style="align-items:flex-start;">
+  <div class="btn-wrap" fxLayout="row" fxlayoutalign="space-between center">
+    <h4><mat-icon  (click)="closeModal('custom-modal-1');">keyboard_backspace</mat-icon> Search Location</h4>
+    <div>&nbsp;</div>
+  </div>
+  
+  <div  fxflexoffset.gt-sm="10"  fxFlex class="search-form">
+    <form class="search-form" fxLayout="row"  >
+      
+        <div class="form-wrap">         
+               <input type="text" id="txtStickyLocationSearch2" style="border-width: 1px; border-style: solid;border-color: grey;"
+              placeholder="Enter Location"
+              aria-label="Number"
+              matInput
+              [formControl]="jsonControl"
+              [matAutocomplete]="auto"
+              (keyup)="getAutocompletePredictions()">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredJSONDataOptions" [value]="option.description"  
+            (onSelectionChange)="onSelectedPlace(option)">                
+            <mat-icon>location_on</mat-icon>
+            <span>{{ option.description }}</span> <br>
+            <small>{{option.pincode}}</small>
+            
+            
+          </mat-option>
+        </mat-autocomplete>
+          
+        </div>
+    </form>
+   </div>
+</mat-toolbar-row>
+  </mat-toolbar>
+  </div>
+  <hr>
+  <!-- <p>Home page text: <input type="text" [(ngModel)]="bodyText" /></p>
+  <button>Close</button> -->
+</jw-modal>
+<!-- <div class="menu-container1">
+    <app-menu></app-menu>
+</div> -->
+<div class="topBarSpace">
+  <router-outlet></router-outlet>
+  </div>
+  <app-footer ></app-footer>
+</mat-sidenav-container>
