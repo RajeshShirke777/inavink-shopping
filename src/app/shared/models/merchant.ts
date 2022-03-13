@@ -1,0 +1,35 @@
+export interface Merchant {
+id?: number;
+mid?: number;
+unique_name: string;
+pid?: number;
+product_id?: number;
+business_name?: string;
+store_name?: string;
+store_description: string;
+working_hours: string;
+gstin: string;
+tan: string;
+cin: string;
+signature: string;
+address_line1: string;
+address_line2: string;
+pincode: string;
+city: string;
+state: string;
+store_no: string;
+phone_no: string;
+latitude: number;
+longitude: number;
+delivery_charges: number;
+charge: number;
+store_picture: string;
+store_picture2: string;
+store_picture3: string;
+store_picture4: string;
+store_images: string;
+actual_price: number;
+discounted_price: number;
+color: string;
+secondary_contact_number: string;
+}
