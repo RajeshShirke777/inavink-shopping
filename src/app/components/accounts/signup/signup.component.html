@@ -1,0 +1,78 @@
+<div class="my-account sec-padding">
+  <div class="container">
+      <mat-card fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start"  class="p-0">
+          <div class="my-account-wrap p-0" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" >
+            <div class="register-wrapper pr-15" fxFlex="100" fxFlex.gt-md="100" fxFlex.md="100">
+                
+              <a [routerLink]="['/home']" routerLinkActive="router-link-active" >
+                <img src="assets/images/Inavink icon.png" style="height: 50px;"></a>
+                          <div class="title">
+                              <h3>Sign Up</h3>
+                            </div>
+                            <div class="register-body">
+                              <!-- <p>Create new account today to reap the benefits of a personalized shopping experience.</p> -->
+                              <form fxLayout="row wrap"  [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+                                <div  [hidden]="step == 2" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                  <mat-form-field class="w-100">
+                                      <input matInput placeholder="Your Name" formControlName="username">
+                                      <mat-error *ngIf="formGroup.controls['username'].invalid">{{getError('username')}}</mat-error>
+                                    </mat-form-field>
+                              </div>
+                                  <div  [hidden]="step == 2"  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                      <mat-form-field class="w-100">
+                                          <input matInput placeholder="email address (required)" formControlName="emailid">
+                                          <mat-error *ngIf="formGroup.controls['emailid'].invalid">{{getError('emailid')}}</mat-error>
+                                        </mat-form-field>
+                                  </div>
+                                  <div  [hidden]="step == 2" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                    <mat-form-field class="w-100">
+                                        <input matInput placeholder="Mobile No" formControlName="mobileno">
+                                        <mat-error *ngIf="formGroup.controls['mobileno'].invalid">{{getError('mobileno')}}</mat-error>
+                                      </mat-form-field>
+                                </div>
+                                <div  [hidden]="step == 2" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                  <mat-form-field class="w-100">
+                                      <input matInput placeholder="Password" formControlName="password" 
+                                      [type]="hide ? 'password' : 'text'">
+                                      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                      <mat-error *ngIf="formGroup.controls['password'].invalid">{{getError('password')}}</mat-error>
+                                      <!-- <mat-password-strength #passwordComponent
+                                                          (onStrengthChanged)="onStrengthChanged($event)"
+                                                          [password]="password.value">
+                                    </mat-password-strength> -->
+                                    
+                                    </mat-form-field>
+                                    <div style="font-size: small;text-align: left;">Min length - 8. Must contains (A-Z),(a-z),(0-9), Symbol</div>
+                                      
+                              </div>  
+                              <!-- <div  [hidden]="step == 2" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                <recaptcha 
+                                    [size]="'invisible'"
+                                    [hide]="false" >
+                                </recaptcha>
+                            </div>  -->
+                              <div [hidden]="step == 1" fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                <mat-form-field class="w-100">
+                                    <input matInput placeholder="Enter OTP sent on your emilid" formControlName="otp">
+                                    <!-- <mat-error *ngIf="formGroup.controls['otp'].invalid">{{getError('otp')}}</mat-error> -->
+                                  </mat-form-field>
+                            </div>            
+                                  <div class="button-wrap" fxFlex="100" fxFlex.gt-sm="100" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                                      <button class="btn-project" mat-raised-button color="primary" type="submit">Submit</button>
+                                    </div>
+                                    <div  fxFlex="100" fxFlex.gt-sm="100" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1" fxLayout.lt-md="column">
+                                      <div fxFlex="100" fxFlex.gt-sm="50" style="text-align: left;"> 
+                                        <a  [routerLink]="['/accounts/login']">Login</a>
+                                        
+                                      </div>
+                                      <div fxFlex="100" fxFlex.gt-sm="50" style="text-align: right;">
+                                        <a  [routerLink]="['/accounts/forgotpassword']">Forgot Password</a>
+                                      </div>
+                                  </div>
+                                  </form>
+                            </div>
+                        </div>
+          </div>
+      </mat-card>
+  </div>
+</div>
