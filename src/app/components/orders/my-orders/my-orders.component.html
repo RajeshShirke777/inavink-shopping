@@ -1,0 +1,268 @@
+<!-- <app-breadcrumb [title]="'Cart'" [breadcrumb]="'Cart'"></app-breadcrumb> -->
+
+<div class="container">
+  <div class="cart-wrapper sec-padding">
+     <div fxLayout="column" fxLayoutAlign="space-around center" *ngIf="!productOrders.length">
+        <mat-chip-list>
+           <mat-chip color="warn" selected="true">YOU HAVE NO ORDERS IN YOUR ACCOUNT.</mat-chip>
+        </mat-chip-list>
+        <div>
+           <a  mat-raised-button color="primary" class="btn-project mt-20">Continue shopping</a>
+        </div>
+     </div>
+     
+
+     <div *ngIf="productOrders.length > 0" fxLayout="row wrap ">
+      <div fxFlex="100">
+          <mat-card class="p-0 text-center no-shadow">
+              <pagination-controls class="product-pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+          </mat-card>
+      </div>
+  </div>
+
+     <mat-card *ngIf="productOrders.length"  class="p-0">
+        
+        <div *ngFor="let order of productOrders | paginate: { itemsPerPage: 5, currentPage: page  }"  style="border: Solid 1px;margin-bottom: 20px;">
+           
+            <!-- <div fxLayout="row">
+               <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                  <div fxLayout="row">
+                     <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20" style="text-align: right;">Shop Name:</div>
+                     <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.store_name }}</div>
+                  </div>
+                  <div fxLayout="row">
+                     <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20" style="text-align: right;"> Contact No :</div>
+                     <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;">  {{ order.merchant_primary_contact_no }}</div>
+                  </div>
+                  <div fxLayout="row">
+                     <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20" style="text-align: right;"> Email Id :</div>
+                     <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.merchant_primary_emailid }}</div>
+                  </div>
+                  <div fxLayout="row">
+                     <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="20" style="text-align: right;"> Shop Address :</div>
+                     <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.merchant_address }}</div>
+                  
+                  </div>
+               </div>
+               <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                  <div fxLayout="row">
+                     <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: right;">Order:</div>
+                     <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.order_code}}</div>
+                  </div>
+                  <div fxLayout="row">
+                     <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: right;">Order Date:</div>
+                     <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.str_order_date}}</div>
+                  </div>
+               </div>
+            </div> -->
+            <footer class="footer" style="padding-bottom: 5px; padding-top: 5px;">
+            <!-- <div class="container">
+               <div class="footer-wrapper" fxLayout="row wrap" fxLayoutAlign="space-between start">
+                  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" >
+                     <span>
+                        Order Code # <b>{{ order.order_code}}</b>
+                     </span>
+                     <div>
+                        <a mat-raised-button color="primary" [routerLink]="['/checkout']" routerLinkActive="router-link-active" >Cancel Order</a>
+                        &nbsp;
+                        <a mat-raised-button color="primary" [routerLink]="['/myorders/1']" routerLinkActive="router-link-active" >View</a>
+                  </div>
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget" style="text-align:left;margin-top: 5px;;">
+                     <h4>Shop Details</h4><br>
+                     {{ order.store_name }}<br>
+                     {{ order.merchant_primary_contact_no }} / {{ order.merchant_primary_contact_no }}<br>
+                     {{ order.merchant_primary_contact_no }} <br>
+                     {{ order.merchant_address }}
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget" style="text-align:left;margin-top: 5px;">
+                     <h4>Shipping Details</h4><br>
+                     {{ order.store_name }}<br>
+                     {{ order.merchant_primary_contact_no }} / {{ order.merchant_primary_contact_no }}<br>
+                     {{ order.merchant_primary_contact_no }} <br>
+                     {{ order.merchant_address }}
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget" style="text-align:left;margin-top: 5px;">
+                     <h4>Payment Details</h4><br>
+                     {{ order.store_name }}<br>
+                     {{ order.merchant_primary_contact_no }} / {{ order.merchant_primary_contact_no }}<br>
+                     {{ order.merchant_primary_contact_no }} <br>
+                     {{ order.merchant_address }}
+                  </div>
+               </div> 
+         </div>-->
+               <div class="container">
+                   <div class="footer-wrapper" fxLayout="row wrap" fxLayoutAlign="space-between start">
+                     <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" >
+                        <span>
+                           Order Code # <b>{{ order.order_code}}</b>
+                        </span>
+                        <div style="font-size: 14px;">
+                           <!-- <a href=# color="primary" (click)="cancelProductOrder(order)"  routerLinkActive="router-link-active" >Cancel Order</a>
+                           &nbsp; -->
+                           <a  mat-raised-button color="primary" [routerLink]="['/orders/orderdetails/', order.order_code]" routerLinkActive="router-link-active" >View</a>
+                     </div>
+                     </div>
+                     <div fxFlex="100" fxLayout="row"  class="mobileHidden">
+                     <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" >
+                        <span>
+                           Order Date <b>{{ order.str_order_date}}</b>
+                        </span>
+                        <div style="font-size: 14px;">
+                           <!-- Order Total <b>&#x20B9; {{ order.total}}</b> -->
+                     </div>
+                     </div>
+                  </div>
+                     <div fxFlex="100" fxLayout="row" class="mobileVisible" style="text-align: left;font-size: 14px;">
+                     
+                        Order Date  <b>{{ order.str_order_date}}</b>
+                        
+                     </div>
+                     <!-- <div fxFlex="100" fxLayout="row" class="mobileVisible" style="text-align: left;font-size: 14px;">
+                     
+                        Order Total  <b>&#x20B9; {{ order.total}}</b>
+                        
+                     </div> -->
+                     <!-- <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" class="mobileHidden">
+                        <span>
+                           Order Date  <b>{{ order.str_order_date}}</b>
+                        </span>
+                        <div style="font-size: 14px;">
+                           Order Total  <b>&#x20B9; {{ order.total}}</b>
+                        </div>
+                     </div> -->
+                     <!-- <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50" class="footer-widget about-widget" style="font-size: 14px;">
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="30" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: left;margin-right: 5px;">Order Date</div>
+                           <div fxFlex="70" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.str_order_date}}</div>
+                        </div>
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="30" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: left;margin-right: 5px;">Shop Name</div>
+                           <div fxFlex="70" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.store_name }}/{{ order.merchant_primary_contact_no }}</div>
+                        </div>
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="30" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: left;margin-right: 5px;"> Contact No</div>
+                           <div fxFlex="70" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.merchant_primary_contact_no }}</div>
+                        </div>
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="30" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: left;margin-right: 5px;"> Email Id</div>
+                           <div fxFlex="70" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.merchant_primary_emailid }}</div>
+                        </div>
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="30" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: left;margin-right: 5px;"> Shop Address</div>
+                           <div fxFlex="70" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.merchant_address }}</div>
+                        
+                        </div>
+                     </div>
+             
+                      
+             
+             
+                       <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50" class="footer-widget about-widget" style="font-size: 14px;">
+
+                        
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="30" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: left;margin-right: 5px;">Contact Name</div>
+                           <div fxFlex="70" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.store_name}}</div>
+                        </div> 
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="30" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: left;margin-right: 5px;">Contact No</div>
+                           <div fxFlex="70" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.store_name}}</div>
+                        </div> 
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="30" fxFlex.gt-sm="30" fxFlex.sm="30" style="text-align: left;margin-right: 5px;">Shiping Address</div>
+                           <div fxFlex="70" fxFlex.gt-sm="70" fxFlex.sm="70" style="text-align: left;"> {{ order.merchant_address }}</div>
+                        </div>
+                       </div> -->
+             
+             
+             
+             
+             
+             
+                   </div>
+               </div>
+             </footer>
+        <div class="mat-table cart-table">
+           <div class="mat-header-row">
+            <div class="mat-header-cell mobileVisible">Order Items</div>
+              <div class="mat-header-cell mobileHidden"></div>
+              <div class="mat-header-cell mobileHidden">Name</div>
+              <div class="mat-header-cell mobileHidden">Quantity</div>
+              <div class="mat-header-cell mobileHidden">Price</div>
+              <div class="mat-header-cell mobileHidden">Total</div>
+              <div class="mat-header-cell mobileHidden">Status</div>
+           </div>
+           <!-- | paginate: { itemsPerPage: 5, currentPage: page, totalItems:totalCount  }" -->
+           <div *ngFor="let item of order.ProductOrderItems">
+            <div fxLayout="row" class="mobileVisible">
+               <div fxLayout="row" fxLayoutAlign="space-between center" style="text-align: left; padding: 5px;" >
+                  <span>
+                     Status : <b>{{ item.order_status}}</b>
+                     <!-- <span *ngIf="item.order_status == 'Confirmed' || item.order_status == 'In-progress' "><br>Expected delivery {{ item.expected_delivery_date }}</span>                -->
+                  </span>
+                  <div style="font-size: 14px;">
+                     <!-- <a href=# color="primary" (click)="cancelProductOrder(order)"  routerLinkActive="router-link-active" >Cancel Order</a>
+                     &nbsp; -->
+                     <!-- <a  mat-raised-button color="primary" routerLinkActive="router-link-active" >View</a> -->
+                     <!-- <a  mat-raised-button color="primary" (click)="cancelProductOrderItem(item)">Cancel</a> -->
+                       
+                     <!-- <mat-icon >remove</mat-icon> -->
+               </div>
+               </div>
+            </div>
+           <div class="mat-row" style="margin: 5px 0px;">
+            <!-- <div class="mat-cell"><a  class="product-name">{{item.order_code}}</a></div> -->
+              <div class="mat-cell"><img [src]="BaseProductImageUrl + item.product_image"></div>
+              <div class="mat-cell mobileVisible" style="text-align:left;vertical-align: top;">
+               <a  class="product-name">{{item.product_name}}</a> <br><br>Qty :<b> {{item.product_quantity }}</b></div>
+              <div class="mat-cell mobileVisible" style="max-width: 80px;vertical-align: top;"><a  class="product-name">{{item.product_price | number : '1.2-2'}}</a></div>
+              <div class="mat-cell mobileHidden"><a  class="product-name">{{item.product_name }}</a></div>
+              <div class="mat-cell mobileHidden">{{item.product_quantity }}</div>
+              <div class="mat-cell mobileHidden">{{item.product_price | number : '1.2-2'}}</div>
+              <div class="mat-cell mobileHidden">{{item.product_price | number : '1.2-2'}}</div>
+              <div class="mat-cell mobileHidden"><b>{{item.order_status}}</b>
+
+              </div>
+           </div>
+         </div>
+           <!-- <div *ngIf="orders.length > 0" fxLayout="row wrap ">
+            <div fxFlex="100">
+                <mat-card class="p-0 text-center no-shadow">
+                    <pagination-controls class="product-pagination" autoHide="true" maxSize="10" (pageChange)="onPageChanged($event)"></pagination-controls>
+                </mat-card>
+            </div>
+        </div> -->
+           <!-- <div class="mat-row">
+              <div class="mat-cell"><a  mat-raised-button color="primary"  class="btn-project" [routerLink]="['/home/one']" routerLinkActive="router-link-active" >Continue shopping</a></div>
+              <div class="mat-cell"></div>
+              <div class="mat-cell"></div>
+              <div class="mat-cell text-right">
+                 <div fxLayout="column" fxLayoutAlign="center end" class="grand-total px-2">
+                    <span class="new-price">Grand total: {{getTotal()  | async }}</span>
+                 </div>
+              </div>
+              <div class="mat-cell text-center"><a mat-raised-button color="primary"  class="btn-project" [routerLink]="['/checkout']" routerLinkActive="router-link-active" >Proceed To Checkout</a></div>
+           </div> -->
+        </div>
+        
+      </div>
+        <!-- <div [@Animation]="animation" fxLayout="row wrap" class="products-wrapper">
+         <div *ngFor="let products of allItems | orderBy:sortByOrder | paginate: { itemsPerPage: 12, currentPage: page  }" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+            <div class="product-box">
+               <app-product [product]="products"></app-product>
+            </div>
+         </div>
+     </div> -->
+     </mat-card>
+     
+
+     <div *ngIf="productOrders.length > 0" fxLayout="row wrap ">
+      <div fxFlex="100">
+          <mat-card class="p-0 text-center no-shadow">
+              <pagination-controls class="product-pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+          </mat-card>
+      </div>
+  </div>
+  </div>
+</div>

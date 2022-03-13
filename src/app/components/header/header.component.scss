@@ -1,0 +1,69 @@
+.header {
+  height: 100px;
+  width: 100%;
+  background: #eee;
+}
+
+
+.secondToolbar2 {
+position: fixed;
+background: #eee;
+top: 0;
+height: 0;
+opacity: 0;
+transition: opacity .01s ease-out, height .01s ease;
+cursor: default;
+user-select: none;
+}
+
+@media only screen and (max-width: 50em) {
+  .home-header .kuro {
+    padding: 0px 0 !important;
+}
+
+   .removeMargin{
+     margin-bottom: 0px !important;
+   }
+  .markhidden{
+    display: none;
+  }
+  .markdisplay{
+    display: inline;
+  }
+  .topBarSpace {
+    margin-top: 150px;
+}
+  .header {
+    height: 200px;
+    width: 100%;
+    
+    background: #eee;
+  }
+  .home-header .search-form {
+    margin: 0 0 !important;
+  }
+  .secondToolbar2 {
+    display: none;
+    }
+
+    
+.secondToolbar {
+  position: fixed;
+  background: #eee;
+  top: 0;
+  height: 0;
+  opacity: 0;
+  transition: opacity .01s ease-out, height .01s ease;
+  cursor: default;
+  user-select: none;
+  }
+
+}
+
+
+.sticky {
+opacity: 1;
+width: 100%;
+z-index: 100000;
+transition: opacity .55s ease-out, height .55s ease;
+}

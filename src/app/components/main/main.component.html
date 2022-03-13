@@ -1,0 +1,20 @@
+<mat-sidenav-container fullscreen>
+ 
+
+ 
+
+<!-- <mat-toolbar 
+   > 
+<mat-toolbar-row class="container" fxLayout="column" fxLayout.gt-sm="row"   fxLayoutGap="20px" fxlayoutalign="center center">
+
+ 
+ 
+  </mat-toolbar-row>
+</mat-toolbar> -->
+     <app-header *ngIf="false"></app-header>
+  <div class="topBarSpace">
+  <router-outlet></router-outlet>
+  </div>
+  <app-footer *ngIf="showHeaderFooter"></app-footer>
+
+</mat-sidenav-container>

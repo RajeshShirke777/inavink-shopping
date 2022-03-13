@@ -1,0 +1,233 @@
+<!-- <app-breadcrumb [title]="'Cart'" [breadcrumb]="'Cart'"></app-breadcrumb> -->
+
+<div class="container">
+  <div class="cart-wrapper sec-padding">
+     <mat-card class="p-0">
+        
+        <div style="margin-bottom: 20px;">    
+         
+   <h3>Order Details</h3>                 
+            <footer class="footer" style="padding-bottom: 5px; padding-top: 5px;background-color: transparent;">
+            <!-- <div class="container">
+               <div class="footer-wrapper" fxLayout="row wrap" fxLayoutAlign="space-between start">
+                  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" >
+                     <span>
+                        Order Code # <b>{{ productOrder.order_code}}</b>
+                     </span>
+                     <div>
+                        <a mat-raised-button color="primary" [routerLink]="['/checkout']" routerLinkActive="router-link-active" >Cancel Order</a>
+                        &nbsp;
+                        <a mat-raised-button color="primary" [routerLink]="['/myorders/1']" routerLinkActive="router-link-active" >View</a>
+                  </div>
+                  </div>
+                  
+                  <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget" style="text-align:left;margin-top: 5px;">
+                     <h4>Shipping Details</h4><br>
+                     {{ productOrder.store_name }}<br>
+                     {{ productOrder.merchant_primary_contact_no }} / {{ productOrder.merchant_primary_contact_no }}<br>
+                     {{ productOrder.merchant_primary_contact_no }} <br>
+                     {{ productOrder.merchant_address }}
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget" style="text-align:left;margin-top: 5px;">
+                     <h4>Payment Details</h4><br>
+                     {{ productOrder.store_name }}<br>
+                     {{ productOrder.merchant_primary_contact_no }} / {{ productOrder.merchant_primary_contact_no }}<br>
+                     {{ productOrder.merchant_primary_contact_no }} <br>
+                     {{ productOrder.merchant_address }}
+                  </div>
+               </div> 
+         </div>-->
+               <div class="">
+                   <div class="footer-wrapper" fxLayout="row wrap" fxLayoutAlign="space-between start">
+                     <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" >
+                        <span>
+                           Order Code # <b>{{ productOrder.order_code}}</b>
+                        </span>
+                        <div>
+                           <!-- <a mat-raised-button color="primary" color="primary" (click)="cancelProductOrder()" routerLinkActive="router-link-active" >Cancel Order</a> -->
+                     </div>
+                     </div>
+                     <!-- <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center" >
+                        <span>
+                           Order Date  <b>{{ productOrder.str_order_date}}</b>
+                        </span>                       
+                     </div> -->
+                     <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget mobileHidden" style="font-size: 14px;text-align:left">
+                        <!-- <div *ngIf="productOrder.shipping == 'Home Delivery'"> -->
+                        <h5><b>Shipping Address</b></h5>
+                        {{ productOrder.cust_contact_name }}<br>
+                        {{ productOrder.cust_primary_contact_no }} / {{ productOrder.cust_secondary_contact_no }}<br>
+                        {{ productOrder.cust_emailid }} <br>
+                        {{ productOrder.cust_address }} <a [href]="cust_googleMapUrl" class="mat-icon" target="_blank">
+                           <mat-icon>location_on</mat-icon></a>
+                        <!-- </div> -->
+                        <!-- <div *ngIf="productOrder.shipping == 'Self Pickup'">
+                           <h5>Shipping Address</h5>
+                           {{ productOrder.store_name }}<br>
+                           {{ productOrder.merchant_primary_contact_no }} / {{ productOrder.merchant_primary_contact_no }}<br>
+                           {{ productOrder.merchant_primary_contact_no }} <br>
+                           {{ productOrder.merchant_address }}
+                           </div> -->
+                     </div>
+                     <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget mobileHidden" style="font-size: 14px;;text-align:left">                        
+                           <h5><b>Shop Details</b></h5>
+                           {{ productOrder.store_name }}<br>
+                           {{ productOrder.merchant_contact_no }} / {{ productOrder.merchant_secondary_contact_no }}<br>
+                           {{ productOrder.merchant_primary_emailid }} <br>
+                           {{ productOrder.merchant_address }} <a [href]="shop_googleMapUrl" class="mat-icon" target="_blank">
+                              <mat-icon>location_on</mat-icon></a>
+                     </div>                     
+             
+             
+                       <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget" style="font-size: 14px;;text-align:left">
+                        <h5><b>Order Summary</b></h5>
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="40" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;margin-right: 5px;">Order Date</div>
+                           <div fxFlex="60" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;"> {{ productOrder.str_order_date}}</div>
+                        </div>
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="40" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;margin-right: 5px;">Sub total</div>
+                           <div fxFlex="60" fxFlex.gt-sm="50" fxFlex.sm="70" style="text-align: left;"> &#x20B9; {{ productOrder.total}}</div>
+                        </div> 
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="40" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;margin-right: 5px;">Shipping Charges</div>
+                           <div fxFlex="60" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;"> &#x20B9; {{ productOrder.shipping_charge}}</div>
+                        </div> 
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="40" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;margin-right: 5px;">Total</div>
+                           <div fxFlex="60" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;"> <b>&#x20B9; {{ productOrder.total }}</b></div>
+                        </div>
+                        <div fxLayout="row" style="margin:5px 0;">
+                           <div fxFlex="40" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;margin-right: 5px;">Payment methods</div>
+                           <div fxFlex="60" fxFlex.gt-sm="50" fxFlex.sm="50" style="text-align: left;"> {{ productOrder.payment_methods }}</div>
+                        </div>
+                       </div>                                                          
+             
+                   </div>
+               </div>
+             </footer>
+        <div class="mat-table cart-table ">
+           <div class="mat-header-row ">
+            <div class="mat-header-cell mobileVisible">Product Details</div>
+              <div class="mat-header-cell mobileHidden"></div>
+              <div class="mat-header-cell mobileHidden">Name</div>
+              <div class="mat-header-cell mobileHidden">Quantity</div>
+              <div class="mat-header-cell mobileHidden">Price</div>
+              <div class="mat-header-cell mobileHidden">Total</div>
+              <div class="mat-header-cell mobileHidden">Status</div>
+              <div class="mat-header-cell mobileHidden">Action</div>
+           </div>
+           <!-- | paginate: { itemsPerPage: 5, currentPage: page, totalItems:totalCount  }" -->
+
+           <div *ngFor="let item of productOrder.ProductOrderItems"  >
+            <div fxLayout="row" class="mobileVisible">
+            <div fxLayout="row" fxLayoutAlign="space-between center" style="text-align: left; padding: 5px;" >
+               <span>
+                  Status : <b>{{ item.order_status}}</b>
+                  <span *ngIf="item.order_status == 'Confirmed' || item.order_status == 'In-progress' "><br>Expected delivery {{ item.expected_delivery_date }}</span>               
+               </span>
+               <div style="font-size: 14px;">
+                  <!-- <a href=# color="primary" (click)="cancelProductOrder(order)"  routerLinkActive="router-link-active" >Cancel Order</a>
+                  &nbsp; -->
+                  <!-- <a  mat-raised-button color="primary" routerLinkActive="router-link-active" >View</a> -->
+                  <a  mat-raised-button color="primary" (click)="cancelProductOrderItem(item)">Cancel</a>
+                    
+                  <!-- <mat-icon >remove</mat-icon> -->
+            </div>
+            </div>
+         </div>
+            <!-- <div class="price-wrap mobileVisible" fxLayout="row" fxLayoutAlign="space-between center">
+              
+                 <div style="text-align: left;">
+                 <b>{{item.order_status}}</b></div>
+                  <span>
+                     
+                  </span>
+            </div> -->
+               <div class="mat-row">
+            <!-- <div class="mat-cell"><a  class="product-name">{{item.order_code}}</a></div> -->
+              <div class="mat-cell"><img [src]="BaseProductImageUrl + item.product_image"></div>
+              <div class="mat-cell mobileVisible" style="vertical-align: top; text-align: left;"><a  class="product-name">{{item.product_name}}</a>
+               <br><br>Qty :<b> {{item.product_quantity }}</b></div>
+               <div class="mat-cell mobileVisible" style="vertical-align: bottom;;">{{item.product_price | number : '1.2-2'}} 
+                  
+               </div>
+              <div class="mat-cell mobileHidden"><a  class="product-name">{{item.product_name}} </a></div>
+              <div class="mat-cell mobileHidden">{{item.product_quantity }}</div>
+              <div class="mat-cell mobileHidden">{{item.product_price | number : '1.2-2'}}</div>
+              <div class="mat-cell mobileHidden">{{item.product_price | number : '1.2-2'}}</div>
+              <div class="mat-cell mobileHidden"><b>{{item.order_status}}</b>
+               <span *ngIf="item.order_status == 'Confirmed' || item.order_status == 'In-progress' "><br>Expected delivery {{ item.expected_delivery_date }}</span>               
+              </div>
+              <div class="mat-cell text-center mobileHidden">
+               <div class="p-1">
+                  <a  mat-raised-button color="primary" (click)="cancelProductOrderItem(item)">Cancel</a>
+                  <!-- <mat-icon (click)="cancelProductOrderItem(item)">remove</mat-icon> -->
+               </div>
+            </div>
+         </div>
+           </div>
+   
+           
+
+           <!-- <div *ngIf="orders.length > 0" fxLayout="row wrap ">
+            <div fxFlex="100">
+                <mat-card class="p-0 text-center no-shadow">
+                    <pagination-controls class="product-pagination" autoHide="true" maxSize="10" (pageChange)="onPageChanged($event)"></pagination-controls>
+                </mat-card>
+            </div>
+        </div> -->
+           <!-- <div class="mat-row">
+              <div class="mat-cell"><a  mat-raised-button color="primary"  class="btn-project" [routerLink]="['/home/one']" routerLinkActive="router-link-active" >Continue shopping</a></div>
+              <div class="mat-cell"></div>
+              <div class="mat-cell"></div>
+              <div class="mat-cell text-right">
+                 <div fxLayout="column" fxLayoutAlign="center end" class="grand-total px-2">
+                    <span class="new-price">Grand total: {{getTotal()  | async }}</span>
+                 </div>
+              </div>
+              <div class="mat-cell text-center"><a mat-raised-button color="primary"  class="btn-project" [routerLink]="['/checkout']" routerLinkActive="router-link-active" >Proceed To Checkout</a></div>
+           </div> -->
+        </div>
+        <footer class="footer mobileVisible" style="padding-bottom: 5px; padding-top: 5px;background-color: transparent;">
+         <div class="">
+        <div class="footer-wrapper " fxLayout="row wrap" fxLayoutAlign="space-between start">
+         <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget" style="font-size: 14px;text-align:left">
+            <!-- <div *ngIf="productOrder.shipping == 'Home Delivery'"> -->
+            <h5><b>Shipping Address</b></h5>
+            {{ productOrder.cust_contact_name }}<br>
+            {{ productOrder.cust_primary_contact_no }} / {{ productOrder.cust_secondary_contact_no }}<br>
+            {{ productOrder.cust_emailid }} <br>
+            {{ productOrder.cust_address }} <a [href]="cust_googleMapUrl" class="mat-icon" target="_blank">
+               <mat-icon>location_on</mat-icon></a>
+            <!-- </div> -->
+            <!-- <div *ngIf="productOrder.shipping == 'Self Pickup'">
+               <h5>Shipping Address</h5>
+               {{ productOrder.store_name }}<br>
+               {{ productOrder.merchant_primary_contact_no }} / {{ productOrder.merchant_primary_contact_no }}<br>
+               {{ productOrder.merchant_primary_contact_no }} <br>
+               {{ productOrder.merchant_address }}
+               </div> -->
+         </div>
+         <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33" class="footer-widget about-widget" style="font-size: 14px;;text-align:left">                        
+               <h5><b>Shop Details</b></h5>
+               {{ productOrder.store_name }}<br>
+               {{ productOrder.merchant_contact_no }} / {{ productOrder.merchant_secondary_contact_no }}<br>
+               {{ productOrder.merchant_primary_emailid }} <br>
+               {{ productOrder.merchant_address }} <a [href]="shop_googleMapUrl" class="mat-icon" target="_blank">
+                  <mat-icon>location_on</mat-icon></a>
+         </div> 
+        </div>
+      </div>
+        </footer>
+      </div>
+        <!-- <div [@Animation]="animation" fxLayout="row wrap" class="products-wrapper">
+         <div *ngFor="let products of allItems | orderBy:sortByOrder | paginate: { itemsPerPage: 12, currentPage: page  }" fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="50" class="col">
+            <div class="product-box">
+               <app-product [product]="products"></app-product>
+            </div>
+         </div>
+     </div> -->
+     </mat-card>
+  </div>
+</div>
